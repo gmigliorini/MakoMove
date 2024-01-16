@@ -2,11 +2,13 @@ package com.makomove.domain;
 
 import java.sql.Date;
 
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,9 +18,14 @@ public class TaskDetailHistory {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "task_detail_id")
 	private TaskDetail taskDetail;
+	
 	@Column(name = "change_date")
 	private Date changeDate;
+	
 	@Column(name = "change_desc")
 	private String changeDesc;
 	

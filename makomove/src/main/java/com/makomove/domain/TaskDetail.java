@@ -1,12 +1,17 @@
 package com.makomove.domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,22 +21,37 @@ public class TaskDetail {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "task_type_id")
 	private TaskType taskType;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "status_id")
 	private Status status;
+	
 	@Column(name = "time_spent")
 	private String timeSpent;  //storing as minutes and converting in UI --> DB
+	
 	@Column(name = "expected_time")
 	private String expectedTime;
+	
 	@Column(name = "assigned_date")
 	private Date assignedDate;
+	
 	private boolean completed;
-	private TaskDetailHistory taskDetailHistory;
+	
+	@OneToMany(mappedBy = "taskDetail")
+	private ArrayList<TaskDetailHistory> taskDetailHistoryList;
 	
 	public TaskDetail() {}
 	
 	public TaskDetail(User user, TaskType taskType, Status status, String timeSpent, String expectedTime,
-			Date assignedDate, boolean completed, TaskDetailHistory taskDetailHistory) {
+			Date assignedDate, boolean completed, ArrayList<TaskDetailHistory> taskDetailHistory) {
 		this.user = user;
 		this.taskType = taskType;
 		this.status = status;
@@ -39,7 +59,7 @@ public class TaskDetail {
 		this.expectedTime = expectedTime;
 		this.assignedDate = assignedDate;
 		this.completed = completed;
-		this.taskDetailHistory = taskDetailHistory;
+		this.taskDetailHistoryList = taskDetailHistory;
 	}
 
 	public Long getId() {
@@ -106,12 +126,12 @@ public class TaskDetail {
 		this.completed = completed;
 	}
 
-	public TaskDetailHistory getTaskDetailHistory() {
-		return taskDetailHistory;
+	public ArrayList<TaskDetailHistory> getTaskDetailHistory() {
+		return taskDetailHistoryList;
 	}
 
-	public void setTaskDetailHistory(TaskDetailHistory taskDetailHistory) {
-		this.taskDetailHistory = taskDetailHistory;
+	public void setTaskDetailHistory(ArrayList<TaskDetailHistory> taskDetailHistory) {
+		this.taskDetailHistoryList = taskDetailHistory;
 	}
 
 }

@@ -1,10 +1,11 @@
 package com.makomove.domain;
 
-import org.springframework.data.annotation.Id;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 @Entity
 public class Status {
@@ -12,6 +13,7 @@ public class Status {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 	@Column(name = "status_type")
 	private String statusType;
 	
