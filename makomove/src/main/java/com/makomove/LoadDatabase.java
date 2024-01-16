@@ -20,6 +20,7 @@ public class LoadDatabase {
 		return args -> {
 			log.info("Preloading " + repository.save(new User("Garrett", "Migliorini", "login", "password")));
 			log.info("Preloading " + repository.save(new User("Jeanette", "Maldonado", "login", "password")));
+			log.info("Preloading " + repository.save(new User("Test", "Test", "login", "password")));
 		};
 	}
 }
